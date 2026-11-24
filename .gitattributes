@@ -1,0 +1,6 @@
+# Keep .cube LUT files with LF line endings for camera hardware compatibility (e.g., Sony A7C II)
+*.cube text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.dcp binary
+*.png binary

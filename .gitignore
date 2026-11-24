@@ -1,0 +1,29 @@
+# Firmware packages, extracted partitions & local tools (NEVER commit)
+*_15.0.*/
+extracted/
+tools/
+.venv/
+__pycache__/
+*.pyc
+*.zip
+*.tar.gz
+*.img
+*.apk
+*.so
+*.bin
+
+# Temporary exploratory scripts
+local_research/
+
+# Heavy raw bulk LUT dumps (330+ MB, regenerate locally via scripts/export_all_luts.py)
+output/luts/
+output/08_DNG_HNCS_and_Vignette/
+output/lut_catalog.json
+output/lut_verification_report.json
+output/previews/
+
+# Keep lightweight 33pt HNCS cubes & full Sony A7C2 Port (4 MB); exclude heavy 64pt & mobile-specific DCPs
+output/Hasselblad_Standard_HNCS/*_64.cube
+output/Hasselblad_Standard_HNCS/*.dcp
+output/Hasselblad_Standard_HNCS/hasselblad_standard_comparison.png
+output/Sony_A7C2_Port/a7c2_slog3_lut_verification.png
