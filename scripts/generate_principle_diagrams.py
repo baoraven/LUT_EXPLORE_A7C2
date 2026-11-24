@@ -593,7 +593,7 @@ def fig06_a7c2_dcp_decoupling():
 
     # Bottom: 3 Delivery Channels on A7C2
     draw_box(ax, 0.03, 0.05, 0.295, 0.23, "交付通道 1｜视频机内直出/监看",
-             "• 16 款 33³ ASCII .cube（4 MB）\n• 拷入 SD 卡 /PRIVATE/SONY/PRO/LUT/\n• 12 款 S-Log3/SGamut3.Cine 专用\n• 4 款 Rec.709 直套备用\n• 支持 Log 实时监看与 PPLUT 烘焙",
+             "• 3 款纯 Std HNCS 33³ ASCII .cube\n• 拷入 SD 卡 /PRIVATE/SONY/PRO/LUT/\n• 2 款 S-Log3/SGamut3.Cine 专用\n• 1 款 Rec.709 直套备用\n• 支持 Log 实时监看与 PPLUT 烘焙",
              edge=BLUE, title_size=11, body_size=8.8)
     draw_box(ax, 0.352, 0.05, 0.295, 0.23, "交付通道 2｜拍照 RAW 无损解片",
              "• Sony_A7C2_Hasselblad_Standard_HNCS.dcp\n• 另附平曲线版（自由控对比度）\n• 拷贝到 Adobe CameraProfiles 目录\n• Lightroom / PS 直接打开 .ARW 选用\n• 照片端色彩还原天花板方案",

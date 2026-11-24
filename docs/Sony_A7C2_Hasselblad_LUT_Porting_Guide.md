@@ -37,27 +37,14 @@
 
 全部产物位于 `output/Sony_A7C2_Port/`：
 
-#### 1. 即拷即用 SD 卡机内 LUT（16 款，刚好填满 A7C2 的 User 1–16 槽位）
+#### 1. 即拷即用 SD 卡机内 LUT（仅保留 3 款纯正哈苏标准 Std HNCS）
 目录：`output/Sony_A7C2_Port/SD_CARD_COPY/PRIVATE/SONY/PRO/LUT/`
 
-- **S-Log3 / S-Gamut3.Cine 专用（12 款，视频 Log 拍摄监看 & PPLUT 内录主力）**
-
-| 建议槽位 | 文件名 | 对应色彩风格 | 说明 |
+| 建议槽位 | 文件名 | 色彩空间 | 说明 |
 | :---: | :--- | :--- | :--- |
-| User 1 | `HB_Std_HNCS_SL3.cube` | **哈苏标准 HNCS（主力推荐）** | 纯正哈苏自然色彩，18% 灰精准落点 `0.47`，保留 6 档高光平滑过渡 |
-| User 2 | `HB_Std_HNCS_TC_SL3.cube` | **哈苏标准 HNCS + 影调反差** | 额外叠加 35% 哈苏 128 点 ToneCurve，暗部更扎实、通透感更强 |
-| User 3 | `HB_Serenity_SL3.cube` | 哈苏大师「童话」(Serenity) | HNCS 基底 + 85% 童话电影感低饱和微蓝暗部 |
-| User 4 | `HB_Radiance_SL3.cube` | 哈苏大师「人像」(Radiance) | HNCS 基底 + 85% 人像暖调通透肤色 |
-| User 5 | `HB_Emerald_SL3.cube` | 哈苏大师「风光」(Emerald) | HNCS 基底 + 85% 深翠绿与钴蓝天空 |
-| User 6 | `HB_XPan_D400_SL3.cube` | 哈苏 XPan 黑白 (Delta 400) | 经典银盐高反差黑白 |
-| User 7 | `HB_Sarek_SL3.cube` | 哈苏北欧「萨勒克」 | 清冷通透北欧空气感 |
-| User 8 | `HB_Vaeroy_SL3.cube` | 哈苏北欧「韦岛」 | 柔和胶片低对比北欧色调 |
-| User 9 | `HB_Fuji_NC_SL3.cube` | 胶片「复古」(Fuji NC) | HNCS + 经典负片风格 |
-| User 10 | `HB_Fuji_CC_SL3.cube` | 胶片「通透」(Fuji CC) | HNCS + 经典正片风格 |
-| User 11 | `HB_Fuji_NH_SL3.cube` | 胶片「清新」(Fuji NH) | HNCS + Pro Neg. Hi 柔和人像 |
-| User 12 | `HB_ToneLight_SL3.cube` | 大师光影 (Tone of Light) | 突出立体光影反差 |
-
-- **Rec.709 直套专用（4 款）**：`HB_Std_HNCS_709.cube`、`HB_Serenity_709.cube`、`HB_Radiance_709.cube`、`HB_Emerald_709.cube`
+| User 1 | `HB_Std_HNCS_SL3.cube` | **S-Log3 / S-Gamut3.Cine → Rec.709** | **哈苏标准 HNCS 主力推荐**：纯正哈苏自然色彩，18% 灰精准落点 `0.47`，保留 6 档高光平滑过渡 |
+| User 2 | `HB_Std_HNCS_TC_SL3.cube` | **S-Log3 / S-Gamut3.Cine → Rec.709** | **哈苏标准 HNCS + 影调反差**：额外叠加 35% 官方 128 点 ToneCurve，暗部更扎实、直出通透 |
+| User 3 | `HB_Std_HNCS_709.cube` | **Rec.709 → Rec.709** | **哈苏标准 HNCS 直套版**：适合非 Log 基础画面或达芬奇 Rec.709 节点直挂 |
 
 #### 2. A7C2 静态照片 RAW（`.ARW`）专属 `.dcp` 相机配置文件
 目录：`output/Sony_A7C2_Port/Lightroom_ACR_DCP/`
@@ -68,7 +55,7 @@
 
 1. **视频机内导入与拍摄（S-Log3）**：
    - 将 `output/Sony_A7C2_Port/SD_CARD_COPY/PRIVATE` 复制到 SD 卡根目录（与 `DCIM` 同级）；
-   - 机内进入 **曝光/颜色 → 颜色/色调 → 管理用户 LUT → 导入/编辑** 导入 16 个 `.cube`；
+   - 机内进入 **曝光/颜色 → 颜色/色调 → 管理用户 LUT → 导入/编辑** 导入 3 个 Std HNCS `.cube`；
    - **监看模式（推荐）**：视频模式开启 `Log 拍摄设置 = 开（灵活 ISO）`，色域选 `S-Gamut3.Cine / S-Log3`，`选择 LUT = User 1`，并开启 `显示选项 → 显示 LUT`；双原生 ISO 为 **ISO 800 / 3200**，建议正常曝光或向右曝光 `+0.3 ~ +0.7 EV`；
    - **直出烘焙模式**：关闭 Log 拍摄，在 `图片配置文件` 选择 `PPLUT1–4` → 基础外观选 `S-Log3 / S-Gamut3.Cine` → LUT 选 `HB_Std_HNCS_SL3`。
 2. **拍照 RAW（`.ARW`）Lightroom / ACR 安装**：
@@ -101,14 +88,13 @@ This guide explains how to scientifically port the **Hasselblad Natural Color So
 
 ### 2. Included Sony A7C II Deliverables (`output/Sony_A7C2_Port/`)
 
-#### A. Plug-and-Play SD Card Pack (16 User LUT Slots)
+#### A. Plug-and-Play SD Card Pack (3 Pure Hasselblad Std HNCS LUTs)
 Directory: `output/Sony_A7C2_Port/SD_CARD_COPY/PRIVATE/SONY/PRO/LUT/`
-- **12× S-Log3 / S-Gamut3.Cine → Rec.709 LUTs**:
+- **2× S-Log3 / S-Gamut3.Cine → Rec.709 LUTs**:
   - `HB_Std_HNCS_SL3.cube` (**Recommended Flagship**: pure Hasselblad Standard HNCS, 18% gray anchored at `0.47` Rec.709, +6 stops smooth highlight roll-off)
   - `HB_Std_HNCS_TC_SL3.cube` (HNCS + 35% official 128-point ToneCurve for crisp out-of-camera contrast)
-  - Creative & Film looks on HNCS base: `HB_Serenity_SL3.cube`, `HB_Radiance_SL3.cube`, `HB_Emerald_SL3.cube`, `HB_XPan_D400_SL3.cube`, `HB_Sarek_SL3.cube`, `HB_Vaeroy_SL3.cube`, `HB_Fuji_NC_SL3.cube`, `HB_Fuji_CC_SL3.cube`, `HB_Fuji_NH_SL3.cube`, `HB_ToneLight_SL3.cube`
-- **4× Rec.709 → Rec.709 LUTs** (for non-Log looks or DaVinci Rec.709 grading nodes):
-  - `HB_Std_HNCS_709.cube`, `HB_Serenity_709.cube`, `HB_Radiance_709.cube`, `HB_Emerald_709.cube`
+- **1× Rec.709 → Rec.709 LUT** (for non-Log looks or DaVinci Rec.709 grading nodes):
+  - `HB_Std_HNCS_709.cube`
 
 #### B. Sony A7C II RAW Camera Profiles (`.dcp`)
 Directory: `output/Sony_A7C2_Port/Lightroom_ACR_DCP/`
@@ -119,7 +105,7 @@ Directory: `output/Sony_A7C2_Port/Lightroom_ACR_DCP/`
 
 1. **In-Camera Video Setup (S-Log3 + User LUT)**:
    - Copy `output/Sony_A7C2_Port/SD_CARD_COPY/PRIVATE` to the root of your formatted SD card (next to `DCIM`).
-   - On the A7C II: `MENU → Exposure/Color → Color/Tone → Manage User LUTs → Import/Edit` and register `User 1`–`User 16`.
+   - On the A7C II: `MENU → Exposure/Color → Color/Tone → Manage User LUTs → Import/Edit` and register `User 1`–`User 3`.
    - **Log Monitoring (Recommended, keeps 10-bit S-Log3)**: Switch dial to **Movie** → `Shooting → Image Quality/Rec → Log Shooting Setting` → `Log Shooting: On (Flexible ISO)`, `Color Gamut: S-Gamut3.Cine / S-Log3`, `Select LUT: User 1 (HB_Std_HNCS_SL3)`, and enable `Setup → Display Option → Display LUT: On`. Dual native base ISOs are **ISO 800 / ISO 3200**; meter normally or expose `+0.3 to +0.7 EV` right for clean shadows.
    - **Baked-In Recording (`PPLUT1–4`)**: Turn `Log Shooting: Off`, go to `Picture Profile → PPLUT1–4`, set `Base Look: S-Log3 / S-Gamut3.Cine` and `LUT: HB_Std_HNCS_SL3`.
 2. **Lightroom Classic / Adobe Camera Raw (`.ARW` RAW)**:

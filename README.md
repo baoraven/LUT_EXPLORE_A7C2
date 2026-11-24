@@ -12,7 +12,7 @@
 <a id="-简体中文"></a>
 ## 🇨🇳 简体中文
 
-本项目完整拆解了**某国产哈苏色彩科学**的端到端色彩处理管线，完成了 4 种固件原生 3D LUT 二进制格式与 DNG 自然色彩标定表（`36×20×20 HueSatMap` + `128 点 ToneCurve` + `17×13` 光学暗角）的逆向解析、行业标准 `.cube` / `.dcp` 无损导出，并实现了面向 **索尼 A7C2（`ILCE-7CM2`）** 的全链路跨机移植方案（机内 16 槽位 S-Log3/Rec.709 33 点 `.cube` + Lightroom/ACR 无损 RAW `.dcp` + 离线批量套色工具）。
+本项目完整拆解了**某国产哈苏色彩科学**的端到端色彩处理管线，完成了 4 种固件原生 3D LUT 二进制格式与 DNG 自然色彩标定表（`36×20×20 HueSatMap` + `128 点 ToneCurve` + `17×13` 光学暗角）的逆向解析、行业标准 `.cube` / `.dcp` 无损导出，并实现了面向 **索尼 A7C2（`ILCE-7CM2`）** 的纯净 **哈苏标准自然色彩（Std HNCS）** 全链路跨机移植方案（机内 3 款 S-Log3/Rec.709 33 点 `.cube` + Lightroom/ACR 无损 RAW `.dcp` + 离线批量套色工具）。
 
 > **免责声明**：本仓库中的分析代码采用 MIT 协议开源；附带的示例 LUT / `.dcp` 配置文件与研究结论仅供**个人色彩科学与图像处理管线学习研究**，请勿用于任何商业用途。
 
@@ -72,7 +72,7 @@
 <a id="-english"></a>
 ## 🇺🇸 English
 
-This repository documents an end-to-end color science analysis of **a flagship mobile Hasselblad color science (HNCS) imaging pipeline**, provides verified binary parsers for 4 native firmware 3D LUT formats and DNG calibration tables (`36×20×20 HueSatMap` + `128-point ToneCurve` + `17×13` optical vignette map), and implements a mathematically calibrated porting pipeline for the **Sony A7C II (`ILCE-7CM2`)**—delivering 16 ready-to-import in-camera 33-point `.cube` LUTs (S-Log3 / S-Gamut3.Cine & Rec.709), sensor-decoupled `.dcp` RAW camera profiles for Lightroom/ACR, and a batch still-photo processor.
+This repository documents an end-to-end color science analysis of **a flagship mobile Hasselblad color science (HNCS) imaging pipeline**, provides verified binary parsers for 4 native firmware 3D LUT formats and DNG calibration tables (`36×20×20 HueSatMap` + `128-point ToneCurve` + `17×13` optical vignette map), and implements a mathematically calibrated **pure Hasselblad Standard (Std HNCS)** porting pipeline for the **Sony A7C II (`ILCE-7CM2`)**—delivering 3 ready-to-import in-camera 33-point `.cube` LUTs (S-Log3 / S-Gamut3.Cine & Rec.709), sensor-decoupled `.dcp` RAW camera profiles for Lightroom/ACR, and a batch still-photo processor.
 
 > **Disclaimer**: All original Python scripts in this repository are released under the MIT License. Any derived LUT/DCP research profiles and findings are provided strictly for **personal color science study and educational pipeline research**; do not redistribute commercially.
 
@@ -112,9 +112,9 @@ All 6 high-resolution diagrams in `docs/figures/` (embedded above) are generated
 │   └── render_standard_comparison_zh.py                  # Annotated 6-way HNCS ColorChecker comparison renderer
 └── output/
     ├── Sony_A7C2_Port/
-    │   ├── SD_CARD_COPY/PRIVATE/SONY/PRO/LUT/            # 16 Sony-compliant 33pt ASCII LF .cube LUTs (drag & drop)
-    │   └── Lightroom_ACR_DCP/                            # 2 Sony ILCE-7CM2 .dcp RAW profiles (Full & FlatCurve)
-    └── Hasselblad_Standard_HNCS/                         # 5 universal 33pt HNCS .cube LUTs
+    │   ├── SD_CARD_COPY/PRIVATE/SONY/PRO/LUT/            # 3 pure Std HNCS Sony-compliant 33pt ASCII LF .cube LUTs
+    │   └── Lightroom_ACR_DCP/                            # 2 Sony ILCE-7CM2 Std HNCS .dcp RAW profiles (Full & FlatCurve)
+    └── Hasselblad_Standard_HNCS/                         # 5 universal 33pt Std HNCS .cube LUTs
 ```
 
 ### 3. Quick Start (English)

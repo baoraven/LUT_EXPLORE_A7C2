@@ -438,7 +438,7 @@ def render_slog3_validation_chart(lut_items: list[tuple[str, np.ndarray | None]]
     scene_sg3c = np.einsum("...j,ij->...i", scene_709, M_REC709_TO_SGAMUT3CINE)
     slog3_img = slog3_encode(scene_sg3c)
 
-    cols = 4
+    cols = min(3, len(lut_items))
     rows = (len(lut_items) + cols - 1) // cols
     pad, label_h = 16, 26
     canvas = Image.new("RGB", (cols * (w + pad) + pad, rows * (h + label_h + pad) + pad), (24, 24, 28))
@@ -475,43 +475,29 @@ def main():
     ).reshape(-1, 2)
 
     # -------------------------------------------------------------------------
-    # A. 12 S-Log3 / S-Gamut3.Cine -> Rec.709 LUTs (User 1..12 on A7C II)
+    # A. S-Log3 / S-Gamut3.Cine -> Rec.709 (Pure Hasselblad Standard HNCS ONLY)
     # -------------------------------------------------------------------------
     slog3_specs = [
-        ("HB_Std_HNCS_SL3.cube",     "Hasselblad Standard HNCS SLog3",        None, 0.0, None, 0.0),
+        ("HB_Std_HNCS_SL3.cube",     "Hasselblad Standard HNCS SLog3",        None, 0.0,  None, 0.0),
         ("HB_Std_HNCS_TC_SL3.cube",  "Hasselblad Standard HNCS Contrast SL3", tc,   0.35, None, 0.0),
-        ("HB_Serenity_SL3.cube",     "Hasselblad Serenity SLog3",             None, 0.0, LUT_SRC / "01_Hasselblad_Master_Filters/Hasselblad_Serenity_童话_32.cube", 0.85),
-        ("HB_Radiance_SL3.cube",     "Hasselblad Radiance SLog3",             None, 0.0, LUT_SRC / "01_Hasselblad_Master_Filters/Hasselblad_Radiance_人像_32.cube", 0.85),
-        ("HB_Emerald_SL3.cube",      "Hasselblad Emerald SLog3",              None, 0.0, LUT_SRC / "01_Hasselblad_Master_Filters/Hasselblad_Emerald_风光_32.cube", 0.85),
-        ("HB_XPan_D400_SL3.cube",    "Hasselblad XPan Delta400 SLog3",        None, 0.0, LUT_SRC / "01_Hasselblad_Master_Filters/Hasselblad_XPan_Delta400_黑白_32.cube", 1.0),
-        ("HB_Sarek_SL3.cube",        "Hasselblad Sarek III SLog3",            None, 0.0, LUT_SRC / "01_Hasselblad_Master_Filters/Hasselblad_Nordic_Sarek_III_16.cube", 0.85),
-        ("HB_Vaeroy_SL3.cube",       "Hasselblad Vaeroy III SLog3",           None, 0.0, LUT_SRC / "01_Hasselblad_Master_Filters/Hasselblad_Nordic_Vaeroy_III_16.cube", 0.85),
-        ("HB_Fuji_NC_SL3.cube",      "Hasselblad Fuji NC SLog3",              None, 0.0, LUT_SRC / "02_Film_Simulation/Film_Fuji_NC_复古_17.cube", 0.85),
-        ("HB_Fuji_CC_SL3.cube",      "Hasselblad Fuji CC SLog3",              None, 0.0, LUT_SRC / "02_Film_Simulation/Film_Fuji_CC_通透_17.cube", 0.85),
-        ("HB_Fuji_NH_SL3.cube",      "Hasselblad Fuji NH SLog3",              None, 0.0, LUT_SRC / "02_Film_Simulation/Film_Fuji_NH_ProNegHi_清新_17.cube", 0.85),
-        ("HB_ToneLight_SL3.cube",    "Hasselblad ToneOfLight SLog3",          None, 0.0, LUT_SRC / "01_Hasselblad_Master_Filters/Hasselblad_Master_ToneOfLight_光影_32.cube", 0.85),
     ]
 
     generated_slog3 = {}
-    print("=== Exporting 12 Sony A7C II S-Log3 / S-Gamut3.Cine 33pt LUTs ===")
+    print("=== Exporting Sony A7C II S-Log3 / S-Gamut3.Cine 33pt Std HNCS LUTs ===")
     for fname, title, use_tc, tc_s, style_p, style_s in slog3_specs:
         arr = build_slog3_lut(hsm_d65, use_tc, tc_s, style_p, style_s, size=33)
         write_sony_cube(arr, SD_LUT_DIR / fname, title)
-        # Check S-Log3 18% middle gray (y = 420/1023 = 0.4106) output!
         mg = apply_cube(arr.astype(np.float64), np.array([[[420/1023]*3]]))[0, 0]
         generated_slog3[fname] = arr
         print(f"  [OK] {fname:26s} | S-Log3 18% gray -> Rec.709 {np.round(mg, 3)}")
 
     # -------------------------------------------------------------------------
-    # B. 4 Rec.709 -> Rec.709 LUTs (User 13..16 on A7C II / DaVinci)
+    # B. Rec.709 -> Rec.709 (Pure Hasselblad Standard HNCS ONLY)
     # -------------------------------------------------------------------------
     rec709_specs = [
         ("HB_Std_HNCS_709.cube",  "Hasselblad Standard HNCS Rec709", HNCS_SRC / "Hasselblad_Standard_HNCS_Main_D65_ColorOnly_64.cube"),
-        ("HB_Serenity_709.cube",  "Hasselblad Serenity Rec709",      LUT_SRC / "01_Hasselblad_Master_Filters/Hasselblad_Serenity_童话_32.cube"),
-        ("HB_Radiance_709.cube",  "Hasselblad Radiance Rec709",      LUT_SRC / "01_Hasselblad_Master_Filters/Hasselblad_Radiance_人像_32.cube"),
-        ("HB_Emerald_709.cube",   "Hasselblad Emerald Rec709",       LUT_SRC / "01_Hasselblad_Master_Filters/Hasselblad_Emerald_风光_32.cube"),
     ]
-    print("\n=== Exporting 4 Sony A7C II Rec.709 33pt LUTs ===")
+    print("\n=== Exporting Sony A7C II Rec.709 33pt Std HNCS LUT ===")
     for fname, title, src in rec709_specs:
         arr = build_rec709_33(src)
         write_sony_cube(arr, SD_LUT_DIR / fname, title)
@@ -537,22 +523,17 @@ def main():
         print(f"  [OK] {p.name:52s} ({len(b)} bytes)")
 
     # -------------------------------------------------------------------------
-    # D. Render S-Log3 Visual Validation Chart
+    # D. Render S-Log3 Visual Validation Chart (Pure Std HNCS ONLY)
     # -------------------------------------------------------------------------
     preview_items = [
         ("Raw S-Log3 / S-Gamut3.Cine Input", None),
-        ("HB_Std_HNCS_SL3 (Standard)", generated_slog3["HB_Std_HNCS_SL3.cube"]),
-        ("HB_Std_HNCS_TC_SL3 (+Curve)", generated_slog3["HB_Std_HNCS_TC_SL3.cube"]),
-        ("HB_Serenity_SL3", generated_slog3["HB_Serenity_SL3.cube"]),
-        ("HB_Radiance_SL3", generated_slog3["HB_Radiance_SL3.cube"]),
-        ("HB_Emerald_SL3", generated_slog3["HB_Emerald_SL3.cube"]),
-        ("HB_XPan_D400_SL3 (B&W)", generated_slog3["HB_XPan_D400_SL3.cube"]),
-        ("HB_Fuji_NC_SL3", generated_slog3["HB_Fuji_NC_SL3.cube"]),
+        ("HB_Std_HNCS_SL3 (Standard HNCS)", generated_slog3["HB_Std_HNCS_SL3.cube"]),
+        ("HB_Std_HNCS_TC_SL3 (HNCS + ToneCurve)", generated_slog3["HB_Std_HNCS_TC_SL3.cube"]),
     ]
     out_png = PORT_ROOT / "a7c2_slog3_lut_verification.png"
     render_slog3_validation_chart(preview_items, out_png)
     print(f"\nSaved S-Log3 visual validation chart: {out_png}")
-    print(f"Total SD card LUTs ready: {len(list(SD_LUT_DIR.glob('*.cube')))} / 16 slots")
+    print(f"Total SD card Std HNCS LUTs ready: {len(list(SD_LUT_DIR.glob('*.cube')))}")
 
 
 if __name__ == "__main__":
