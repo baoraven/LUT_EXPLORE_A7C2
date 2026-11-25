@@ -37,14 +37,16 @@
 
 全部产物位于 `output/Sony_A7C2_Port/`：
 
-#### 1. 即拷即用 SD 卡机内 LUT（仅保留 3 款纯正哈苏标准 Std HNCS）
+#### 1. 即拷即用 SD 卡机内 LUT（3 款纯正哈苏标准 Std HNCS 详细对比）
 目录：`output/Sony_A7C2_Port/SD_CARD_COPY/PRIVATE/SONY/PRO/LUT/`
 
-| 建议槽位 | 文件名 | 色彩空间 | 说明 |
-| :---: | :--- | :--- | :--- |
-| User 1 | `HB_Std_HNCS_SL3.cube` | **S-Log3 / S-Gamut3.Cine → Rec.709** | **哈苏标准 HNCS 主力推荐**：纯正哈苏自然色彩，18% 灰精准落点 `0.47`，保留 6 档高光平滑过渡 |
-| User 2 | `HB_Std_HNCS_TC_SL3.cube` | **S-Log3 / S-Gamut3.Cine → Rec.709** | **哈苏标准 HNCS + 影调反差**：额外叠加 35% 官方 128 点 ToneCurve，暗部更扎实、直出通透 |
-| User 3 | `HB_Std_HNCS_709.cube` | **Rec.709 → Rec.709** | **哈苏标准 HNCS 直套版**：适合非 Log 基础画面或达芬奇 Rec.709 节点直挂 |
+> **注意**：`HB_Std_HNCS_709.cube` **不含 S-Log3 解码**，直接套给 S-Log3 会仍是灰片；A7C2 拍 S-Log3 必须选用带 `_SL3` 的前两款。
+
+| 建议槽位 | 文件名 | 色彩空间 | 128 点 ToneCurve | 18% 中灰输出 | 观感差异与适用场景 |
+| :---: | :--- | :--- | :---: | :---: | :--- |
+| User 1 | `HB_Std_HNCS_SL3.cube` | **S-Log3 / S-Gamut3.Cine → Rec.709** | 0%（纯 HNCS） | **`0.470`** | **主力平衡版**：贴近 Sony `s709`，保留完整 6 档高光平滑过渡与暗部宽容度，适合户外大光比、逆光与日常通用 |
+| User 2 | `HB_Std_HNCS_TC_SL3.cube` | **S-Log3 / S-Gamut3.Cine → Rec.709** | **叠加 35%** | **`0.515`** (+0.3 EV) | **通透直出版**：在 `_SL3` 基础上融合官方 128 点哈苏影调曲线，中间调更亮更通透、暗部脚部更扎实，适合室内、阴天与人像直出 |
+| User 3 | `HB_Std_HNCS_709.cube` | **Rec.709 → Rec.709** | 0%（纯 HNCS） | `0.500` (不变) | **纯色彩微调版（不解 Log）**：仅做 36×20×20 HNCS 色彩映射，供达芬奇 CST/`s709` 解灰后的后级节点或普通 Rec.709 素材使用 |
 
 #### 2. A7C2 静态照片 RAW（`.ARW`）专属 `.dcp` 相机配置文件
 目录：`output/Sony_A7C2_Port/Lightroom_ACR_DCP/`
@@ -88,13 +90,16 @@ This guide explains how to scientifically port the **Hasselblad Natural Color So
 
 ### 2. Included Sony A7C II Deliverables (`output/Sony_A7C2_Port/`)
 
-#### A. Plug-and-Play SD Card Pack (3 Pure Hasselblad Std HNCS LUTs)
+#### A. Plug-and-Play SD Card Pack (3 Pure Hasselblad Std HNCS LUTs — Detailed Comparison)
 Directory: `output/Sony_A7C2_Port/SD_CARD_COPY/PRIVATE/SONY/PRO/LUT/`
-- **2× S-Log3 / S-Gamut3.Cine → Rec.709 LUTs**:
-  - `HB_Std_HNCS_SL3.cube` (**Recommended Flagship**: pure Hasselblad Standard HNCS, 18% gray anchored at `0.47` Rec.709, +6 stops smooth highlight roll-off)
-  - `HB_Std_HNCS_TC_SL3.cube` (HNCS + 35% official 128-point ToneCurve for crisp out-of-camera contrast)
-- **1× Rec.709 → Rec.709 LUT** (for non-Log looks or DaVinci Rec.709 grading nodes):
-  - `HB_Std_HNCS_709.cube`
+
+> **Warning**: `HB_Std_HNCS_709.cube` **does NOT decode S-Log3**—applying it to raw S-Log3 footage keeps the image flat/gray. Always pick one of the `_SL3` LUTs when shooting S-Log3 on the A7C II.
+
+| Slot | Filename | Color Space | 128-pt ToneCurve | 18% Gray Out | Visual Difference & Best Use |
+| :---: | :--- | :--- | :---: | :---: | :--- |
+| User 1 | `HB_Std_HNCS_SL3.cube` | **S-Log3 / S-Gamut3.Cine → Rec.709** | 0% (Pure HNCS) | **`0.470`** | **Flagship Balanced**: Close to Sony `s709` exposure, smooth +6-stop highlight roll-off, maximum DR headroom; best for daylight/high-contrast scenes |
+| User 2 | `HB_Std_HNCS_TC_SL3.cube` | **S-Log3 / S-Gamut3.Cine → Rec.709** | **35% Blended** | **`0.515`** (+0.3 EV) | **Airy SOOC Contrast**: Blends in 35% of the official 128-pt Hasselblad ToneCurve for brighter midtones, glowing skin, and firmer shadows; best for indoors, overcast, and portraits |
+| User 3 | `HB_Std_HNCS_709.cube` | **Rec.709 → Rec.709** | 0% (Pure HNCS) | `0.500` (unchanged) | **Color-Only (No Log Decode)**: Pure 36×20×20 HNCS color shift for already-normalized Rec.709 clips (e.g., downstream of a DaVinci CST / `s709` node) |
 
 #### B. Sony A7C II RAW Camera Profiles (`.dcp`)
 Directory: `output/Sony_A7C2_Port/Lightroom_ACR_DCP/`

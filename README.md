@@ -56,6 +56,15 @@
 
 ### 三、快速上手（中文）
 
+#### A7C2 机内 3 款 Std HNCS LUT 区别与选用指南
+> **重要避坑**：`HB_Std_HNCS_709.cube` **不包含 S-Log3 解码**！在 A7C2 机内 S-Log3 拍摄/监看时若误选 `_709`，画面仍会是灰片；拍 S-Log3 请务必使用带 **`_SL3`** 后缀的两款。
+
+| 文件名 | 输入 → 输出 | 是否解 S-Log3 | 官方 128 点 ToneCurve | 18% 中灰输出 | 观感与推荐场景 |
+| :--- | :--- | :---: | :---: | :---: | :--- |
+| `HB_Std_HNCS_SL3.cube` | `S-Log3 / S-Gamut3.Cine → Rec.709` | **是** | 0%（纯 HNCS） | **`0.470`** | 贴近 Sony `s709`，光比自然沉稳、保留最多高光/暗部余量；**户外大光比与日常主力首选** |
+| `HB_Std_HNCS_TC_SL3.cube` | `S-Log3 / S-Gamut3.Cine → Rec.709` | **是** | **叠加 35%** | **`0.515`** (+0.3 EV) | 中间调更明亮通透、肤色更显白净、暗部更扎实；**室内/阴天/人像直出首选** |
+| `HB_Std_HNCS_709.cube` | `Rec.709 → Rec.709` | **否** | 0%（纯 HNCS） | `0.500` (不变) | 仅作用于已还原的常规 Rec.709 画面（如达芬奇 CST/`s709` 后级节点或非 Log 素材） |
+
 - **索尼 A7C2 视频机内直出 / 监看**：将 `output/Sony_A7C2_Port/SD_CARD_COPY/PRIVATE` 文件夹直接复制到 SD 卡根目录 → 机内菜单 `曝光/颜色 → 颜色/色调 → 管理用户 LUT → 导入/编辑`（完整菜单配置见 [双语移植手册](docs/Sony_A7C2_Hasselblad_LUT_Porting_Guide.md)）。
 - **索尼 A7C2 拍照 `.ARW` RAW 无损解片**：将 `output/Sony_A7C2_Port/Lightroom_ACR_DCP/*.dcp` 复制到 `C:\Users\<用户名>\AppData\Roaming\Adobe\CameraRaw\CameraProfiles\`，重启 Lightroom Classic / Photoshop (ACR) 即可选用。
 - **离线批量套色（可选光学暗角）**：
@@ -118,6 +127,15 @@ All 6 high-resolution diagrams in `docs/figures/` (embedded above) are generated
 ```
 
 ### 3. Quick Start (English)
+
+#### Differences Between the 3 A7C II Std HNCS LUTs
+> **Important Note**: `HB_Std_HNCS_709.cube` **does NOT decode S-Log3**. Loading `_709` directly on S-Log3 footage will leave the image flat/gray—always use the **`_SL3`** LUTs for in-camera S-Log3 monitoring/recording.
+
+| Filename | Input → Output | Decodes S-Log3 | 128-pt ToneCurve | 18% Gray Out | Look & Best Use |
+| :--- | :--- | :---: | :---: | :---: | :--- |
+| `HB_Std_HNCS_SL3.cube` | `S-Log3 / S-Gamut3.Cine → Rec.709` | **Yes** | 0% (Pure HNCS) | **`0.470`** | Balanced filmic contrast matching Sony `s709`, max highlight/shadow headroom; **best general & bright outdoor choice** |
+| `HB_Std_HNCS_TC_SL3.cube` | `S-Log3 / S-Gamut3.Cine → Rec.709` | **Yes** | **35% Blended** | **`0.515`** (+0.3 EV) | Brighter airy midtones, cleaner glowing skin tones, firmer shadow toe; **best for indoors, overcast, and SOOC portraits** |
+| `HB_Std_HNCS_709.cube` | `Rec.709 → Rec.709` | **No** | 0% (Pure HNCS) | `0.500` (unchanged) | Color-only look LUT for already-normalized Rec.709 footage (e.g., after a DaVinci CST / `s709` node, or non-Log stills/video) |
 
 - **Sony A7C II In-Camera Video (S-Log3 Monitoring / PPLUT Recording)**:
   Copy `output/Sony_A7C2_Port/SD_CARD_COPY/PRIVATE` directly to the root of your A7C II SD card → `Menu → Exposure/Color → Color/Tone → Manage User LUTs → Import/Edit` (see the [Bilingual Sony A7C II Porting Guide](docs/Sony_A7C2_Hasselblad_LUT_Porting_Guide.md#english-guide) for full camera menu settings).
