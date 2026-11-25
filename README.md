@@ -116,6 +116,7 @@ All 6 high-resolution diagrams in `docs/figures/` (embedded above) are generated
 │   ├── master_mode_composer.py                           # Master Mode 4-slider 3×3 bilinear LUT composer
 │   ├── port_to_sony_a7c2.py                              # Sony A7C II 33pt S-Log3/Rec.709 LUT + ILCE-7CM2 .dcp builder
 │   ├── apply_a7c2_photo_batch.py                         # Still-photo batch LUT + optical vignette processor
+│   ├── fit_a7c2_pp_hncs.py                               # Numerical optimizer fitting Sony A7C II PP1–PP6 to HNCS
 │   ├── verify_and_preview.py                             # Automated .cube validator & ColorChecker preview renderer
 │   ├── generate_principle_diagrams.py                    # Reproducible generator for all 6 principle figures
 │   └── render_standard_comparison_zh.py                  # Annotated 6-way HNCS ColorChecker comparison renderer

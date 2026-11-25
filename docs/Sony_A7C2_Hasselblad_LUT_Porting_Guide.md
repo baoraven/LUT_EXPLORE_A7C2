@@ -70,6 +70,37 @@
        --strength 1.0 --vignette 0.5
    ```
 
+### 五、A7C2 静态照片「机内直出」逼近哈苏 HNCS：`PP1–PP6` vs 创意外观（实测拟合配方）
+
+**结论：图片配置文件（`PP1–PP6`）完胜创意外观！**
+- **创意外观**只有全局对比度/饱和度，无分色控制，实测对 HNCS 全色域色差 `ΔE` 仅能降低 **1.1%**（`5.68 → 5.62`）；
+- **图片配置文件（`PP`）**在拍照模式完全可用（选 `Still` 或 `S-Cinetone` 伽马即可支持 **ISO 100** 正常测光，不影响 `RAW + JPEG` 的 RAW 宽容度），且具备 **6 色独立 `Color Depth (R/G/B/C/M/Y)`**（索尼官方定义：正值 `+` 压暗加深色彩、负值 `-` 提亮变浅，不影响中性灰）与 **`Knee` 拐点高光滚降**，实测可把 24 色卡色差 `ΔE` 压到 **`2.99`**（全色域误差削减约 10%）。
+
+![A7C2 PP1 拟合 HNCS 验证图](figures/09_a7c2_pp_vs_hncs_simulation.png)
+
+> **边界说明**：索尼机内 PP 没有独立分色色相偏移（HSL Hue），因此机内直出可还原 **~75–80% 的哈苏影调与红/蓝/绿/肤色深浅质感**；强烈建议设为 **`RAW + JPEG` + 开启 `PP1`**——JPEG 当场直出分享，`.ARW` 回家进 Lightroom 套我们的 `.dcp` 即可无损出 100% 满血 HNCS！
+
+#### 配方 1｜`PP1` 主力通用版（基于 `Still` 伽马 · 数学拟合直出 · 支持 ISO 100）
+| 菜单项 | 推荐实拍值（稳妥平衡） | 数学拟合浓郁版 | 对应 HNCS 原理 |
+| :--- | :--- | :--- | :--- |
+| **黑色电平 (Black Level)** | **`-1`** | `-1` | 压实最暗脚部，消除微灰雾感 |
+| **伽马 (Gamma)** | **`Still`** | `Still` | 静态照片最纯净基线，支持 **ISO 100** |
+| **黑色伽马 (Black Gamma)** | `范围: 中 (Middle)` / **`等级: -2`** | `中 / -2` | 还原 128 点 ToneCurve 暗部扎实感 |
+| **拐点 (Knee)** | `手动`：`拐点 85%` / **`斜率 +2`** | `85% / +2` | 模拟哈苏平滑高光肩部，防天空/肤色死白 |
+| **色彩模式 (Color Mode)** | **`Still`**（或 `Pro` 更沉稳） | `Still` | 中性精准基线 |
+| **饱和度 (Saturation)** | **`-1`** | `-1` | 哈苏克制自然色彩，拒绝数码溢色 |
+| **色彩相位 (Color Phase)** | **`0`** | `0` | 保持肤色纯净无偏色 |
+| **色彩深度 (Color Depth)** | **`R+2, G-2, B+3, C-1, M+2, Y-1`** | `R+3, G-3, B+4, C-1, M+3, Y-2` | 红/蓝/品压暗变深邃（标志性哈苏蓝天），绿/黄微提亮通透 |
+| **细节 (Detail)** | **`-3`** | `-3` | 降低机内数码锐化味，贴近中画幅柔润微反差 |
+| **AWB 白平衡偏移（可选）** | `0`（或 `A0.5 G0.5`） | `A0.5 G0.5` | 轻微抵消冷品倾向，日光肤色更自然 |
+
+#### 配方 2｜`PP2` 人像/柔光进阶版（基于 A7C2 原生 `S-Cinetone` · 支持 ISO 100）
+- `伽马 = S-Cinetone` ｜ `色彩模式 = S-Cinetone` ｜ `黑色电平 = 0` ｜ `黑色伽马 = 宽 / -1` ｜ `拐点 = 自动`
+- `饱和度 = +1`（补齐 S-Cinetone 偏素饱和度）｜ `色彩相位 = 0` ｜ `色彩深度 = R+1, G-1, B+2, C 0, M+1, Y-1` ｜ `细节 = -3`
+
+#### 备选｜极简创意外观（仅当不想开关 PP、需保留机内 DRO 时）
+- `创意外观 = ST`：`对比度 +1`，`高光 -2`，`阴影 -1`，`淡化 0`，`饱和度 -1`，`锐度 -2`，`清晰度 0`。
+
 ---
 
 <a id="english-guide"></a>
@@ -125,3 +156,20 @@ Directory: `output/Sony_A7C2_Port/Lightroom_ACR_DCP/`
        --lut output/Hasselblad_Standard_HNCS/Hasselblad_Standard_HNCS_Main_D65_ColorOnly_33.cube \
        --strength 1.0 --vignette 0.5
    ```
+
+### 4. In-Camera Still Photo SOOC HNCS Approximation: `PP1–PP6` vs Creative Look
+
+**Verdict: Picture Profile (`PP1–PP6`) beats Creative Look decisively.**
+- **Creative Look** only provides global contrast/saturation (reduces all-color CIE Lab `ΔE` vs true HNCS by only **1.1%**).
+- **Picture Profile (`PP`)** works natively for JPEG/HEIF stills at **ISO 100** when using `Still` or `S-Cinetone` gamma (without affecting `RAW + JPEG` RAW metering!), and offers **6-channel `Color Depth` (`R/G/B/C/M/Y`)** plus **`Knee` highlight roll-off**—reducing 24-ColorChecker `ΔE` to **`2.99`** (fitted in `scripts/fit_a7c2_pp_hncs.py`, see Figure 09 above).
+- **Best Practice**: Shoot **`RAW + JPEG` with `PP1`** for instant ~75–80% HNCS JPEGs on the spot, and apply our `Sony_A7C2_Hasselblad_Standard_HNCS.dcp` to `.ARW` in Lightroom/ACR for 100% lossless full HNCS (including per-hue Hue shifts).
+
+#### Recipe 1: `PP1` Flagship General HNCS Stills (`Still` Gamma, ISO 100)
+- **Black Level**: `-1` | **Gamma**: `Still` | **Black Gamma**: `Middle / -2`
+- **Knee**: `Manual` (`Point 85%`, `Slope +2`) | **Color Mode**: `Still` (or `Pro`)
+- **Saturation**: `-1` | **Color Phase**: `0` | **Detail**: `-3`
+- **Color Depth**: **`R+2, G-2, B+3, C-1, M+2, Y-1`** *(Rich/Fitted variant: `R+3, G-3, B+4, C-1, M+3, Y-2`)*
+
+#### Recipe 2: `PP2` Soft Portrait / Filmic Highlight Stills (`S-Cinetone`, ISO 100)
+- **Gamma**: `S-Cinetone` | **Color Mode**: `S-Cinetone` | **Black Level**: `0` | **Black Gamma**: `Wide / -1` | **Knee**: `Auto`
+- **Saturation**: `+1` | **Color Phase**: `0` | **Color Depth**: `R+1, G-1, B+2, C 0, M+1, Y-1` | **Detail**: `-3`
